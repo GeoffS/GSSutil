@@ -12,6 +12,8 @@ Button	KEYWORD1	GSSutil
 # Methods and Functions (KEYWORD2)
 #######################################
 isPressed	KEYWORD2
+checkButtonState	KEYWORD2
+wasClicked	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

@@ -15,10 +15,12 @@ public:
 
 	void checkButtonState();
 	bool isPressed();
+	bool wasClicked();
 
 private:
 	const int pin;
 	int currState;                  // the current reading from the input pin
+	bool _wasClicked = false;
 	int lastState = LOW;            // the previous reading from the input pin
 	long lastDebounceTime_ms = 0;      // the last time the output pin was toggled
 	const long debounceDelay_ms = 20;  // the debounce time; increase if the output flickers

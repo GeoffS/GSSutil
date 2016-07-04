@@ -17,6 +17,9 @@ Button::~Button()
 
 void Button::checkButtonState()
 {
+	// Clicked only lasts one cycle:
+	_wasClicked = false;
+
 	// read the state of the switch into a local variable:
 	int reading = digitalRead(pin);
 
@@ -35,8 +38,15 @@ void Button::checkButtonState()
 		// than the debounce delay, so take it as the actual current state:
 
 		// if the button state has changed:
-		if (reading != currState) {
+		if (reading != currState)
+		{
 			currState = reading;
+
+			// only toggle the LED if the new button state is HIGH
+			if (currState == LOW)
+			{
+			   _wasClicked = true;
+            }
 		}
 	}
 
@@ -48,4 +58,9 @@ void Button::checkButtonState()
 bool Button::isPressed()
 {
 	return (currState == HIGH) ? true : false;
+}
+
+bool Button::wasClicked()
+{
+	return _wasClicked;
 }
