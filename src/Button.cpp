@@ -9,6 +9,7 @@ http://www.arduino.cc/en/Tutorial/Debounce
 Button::Button(const int buttonPin) : pin(buttonPin)
 {
 	pinMode(pin, INPUT_PULLUP);
+	repeatTime_ms = 300;
 }
 
 Button::~Button()
@@ -41,6 +42,9 @@ void Button::checkButtonState()
 		if (reading != currState)
 		{
 			currState = reading;
+			currStateTime_ms = millis();
+			lastUpdateTime_ms = 0;
+			repeatTime_ms = 300;
 
 			// only toggle the LED if the new button state is HIGH
 			if (currState == LOW)
@@ -57,10 +61,40 @@ void Button::checkButtonState()
 
 bool Button::isPressed()
 {
-	return (currState == HIGH) ? true : false;
+	return (currState == LOW) ? true : false;
+}
+
+long Button::pressedTime_ms()
+{
+	return millis() - currStateTime_ms;
+}
+
+bool Button::updateValue()
+{
+	if(wasClicked())
+	{
+		resetClicked();
+		return true;
+	}
+	long pt = pressedTime_ms();
+	if(pt > 4000) repeatTime_ms = 0;
+	else if(pt > 3000) repeatTime_ms = 100;
+	else if(pt > 1500) repeatTime_ms = 200;
+
+	if( (pt - lastUpdateTime_ms) > repeatTime_ms)
+	{
+		lastUpdateTime_ms = pt;
+		return true;
+	}
+	return false;
 }
 
 bool Button::wasClicked()
 {
 	return _wasClicked;
+}
+
+void Button::resetClicked()
+{
+	_wasClicked = false;
 }
