@@ -11,6 +11,7 @@ class Button
 {
 public:
 	Button(const int buttonPin);
+	Button(const int buttonPin, const bool isPulldownButton);
 	~Button();
 
 	void checkButtonState();
@@ -20,6 +21,8 @@ public:
 	void resetClicked();
 
 private:
+	int buttonPressedValue = LOW;
+	int buttonReleasedValue = HIGH;
 	long pressedTime_ms();
 	const int pin;
 	int currState;                  // the current reading from the input pin
@@ -27,7 +30,7 @@ private:
 	long lastUpdateTime_ms;
 	long repeatTime_ms;
 	bool _wasClicked = false;
-	int lastState = LOW;            // the previous reading from the input pin
+	int lastState;            // the previous reading from the input pin
 	long lastDebounceTime_ms = 0;      // the last time the output pin was toggled
 	const long debounceDelay_ms = 20;  // the debounce time; increase if the output flickers
 };

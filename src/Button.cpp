@@ -8,8 +8,27 @@ http://www.arduino.cc/en/Tutorial/Debounce
 
 Button::Button(const int buttonPin) : pin(buttonPin)
 {
-	pinMode(pin, INPUT_PULLUP);
-	repeatTime_ms = 300;
+	Button(buttonPin, true);
+}
+
+Button::Button(const int buttonPin, const bool isPulldownButton) : pin(buttonPin)
+{
+	if(isPulldownButton)
+	{
+		pinMode(pin, INPUT_PULLUP);
+		repeatTime_ms = 300;
+		buttonPressedValue = LOW;
+		buttonReleasedValue = HIGH;
+	}
+	else
+	{
+		pinMode(pin, INPUT);
+		repeatTime_ms = 300;
+		buttonPressedValue = HIGH;
+		buttonReleasedValue = LOW;
+	}
+
+	lastState = buttonPressedValue;
 }
 
 Button::~Button()
