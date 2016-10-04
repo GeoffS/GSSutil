@@ -17,6 +17,11 @@ checkButtonState	KEYWORD2
 wasClicked	KEYWORD2
 resetClicked	KEYWORD2
 
+
+Blinker	KEYWORD1	GSSutil
+updateLedOnFlag	KEYWORD2
+ledOn	KEYWORD2
+
 #######################################
 # Constants (LITERAL1)
 #######################################
