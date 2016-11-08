@@ -28,7 +28,7 @@ Button::Button(const int buttonPin, const bool isPulldownButton) : pin(buttonPin
 		buttonReleasedValue = LOW;
 	}
 
-	lastState = buttonPressedValue;
+	lastState = buttonReleasedValue;
 }
 
 Button::~Button()
@@ -66,7 +66,7 @@ void Button::checkButtonState()
 			repeatTime_ms = 300;
 
 			// only toggle the LED if the new button state is HIGH
-			if (currState == LOW)
+			if (currState == buttonPressedValue)
 			{
 			   _wasClicked = true;
             }
@@ -80,7 +80,7 @@ void Button::checkButtonState()
 
 bool Button::isPressed()
 {
-	return (currState == LOW) ? true : false;
+	return (currState == buttonPressedValue) ? true : false;
 }
 
 long Button::pressedTime_ms()
