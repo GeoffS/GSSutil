@@ -16,6 +16,7 @@ public:
 
 	void checkButtonState();
 	bool isPressed();
+	long pressedTime_ms();
 	bool updateValue();
 	bool wasClicked();
 	void resetClicked();
@@ -23,7 +24,6 @@ public:
 private:
 	int buttonPressedValue = LOW;
 	int buttonReleasedValue = HIGH;
-	long pressedTime_ms();
 	const int pin;
 	int currState;                  // the current reading from the input pin
 	long currStateTime_ms;          // How long we've been in the current state.
