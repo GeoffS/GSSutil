@@ -20,6 +20,7 @@ public:
 	bool updateValue();
 	bool wasClicked();
 	void resetClicked();
+	void setDebounceDelay_ms(int newDebounceDelay_ms);
 
 private:
 	int buttonPressedValue = LOW;
@@ -31,8 +32,8 @@ private:
 	long repeatTime_ms;
 	bool _wasClicked = false;
 	int lastState;            // the previous reading from the input pin
-	long lastDebounceTime_ms = 0;      // the last time the output pin was toggled
-	const long debounceDelay_ms = 20;  // the debounce time; increase if the output flickers
+	unsigned long lastDebounceTime_ms = 0;      // the last time the output pin was toggled
+	unsigned long debounceDelay_ms = 20;  // the debounce time; increase if the output flickers
 };
 
 

@@ -117,3 +117,9 @@ void Button::resetClicked()
 {
 	_wasClicked = false;
 }
+
+
+void Button::setDebounceDelay_ms(int newDebounceDelay_ms)
+{
+	debounceDelay_ms = newDebounceDelay_ms;
+}
