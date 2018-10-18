@@ -16,6 +16,7 @@ updateValue	KEYWORD2
 checkButtonState	KEYWORD2
 wasClicked	KEYWORD2
 resetClicked	KEYWORD2
+config	KEYWORD2
 
 
 Blinker	KEYWORD1	GSSutil

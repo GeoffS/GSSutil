@@ -1,19 +1,32 @@
 /*
-Adapted from:
-http://www.arduino.cc/en/Tutorial/Debounce
-*/
-
+ Adapted from:
+ http://www.arduino.cc/en/Tutorial/Debounce
+ */
 
 #include "Button.h"
 
-Button::Button(const int buttonPin) : pin(buttonPin)
+Button::Button()
+{
+
+}
+
+Button::Button(const int buttonPin)
 {
 	Button(buttonPin, true);
 }
 
-Button::Button(const int buttonPin, const bool isPulldownButton) : pin(buttonPin)
+Button::Button(const int buttonPin, const bool isPulldownButton)
 {
-	if(isPulldownButton)
+	config(buttonPin, isPulldownButton);
+}
+
+Button::~Button() {}
+
+void Button::config(const int buttonPin, const bool isPulldownButton)
+{
+	pin = buttonPin;
+
+	if (isPulldownButton)
 	{
 		pinMode(pin, INPUT_PULLUP);
 		repeatTime_ms = 300;
@@ -31,10 +44,6 @@ Button::Button(const int buttonPin, const bool isPulldownButton) : pin(buttonPin
 	lastState = buttonReleasedValue;
 }
 
-Button::~Button()
-{
-}
-
 void Button::checkButtonState()
 {
 	// Clicked only lasts one cycle:
@@ -48,12 +57,14 @@ void Button::checkButtonState()
 	// long enough since the last press to ignore any noise:
 
 	// If the switch changed, due to noise or pressing:
-	if (reading != lastState) {
+	if (reading != lastState)
+	{
 		// reset the debouncing timer
 		lastDebounceTime_ms = millis();
 	}
 
-	if ((millis() - lastDebounceTime_ms) > debounceDelay_ms) {
+	if ((millis() - lastDebounceTime_ms) > debounceDelay_ms)
+	{
 		// whatever the reading is at, it's been there for longer
 		// than the debounce delay, so take it as the actual current state:
 
@@ -68,8 +79,8 @@ void Button::checkButtonState()
 			// only toggle the LED if the new button state is HIGH
 			if (currState == buttonPressedValue)
 			{
-			   _wasClicked = true;
-            }
+				_wasClicked = true;
+			}
 		}
 	}
 
@@ -90,17 +101,20 @@ long Button::pressedTime_ms()
 
 bool Button::updateValue()
 {
-	if(wasClicked())
+	if (wasClicked())
 	{
 		resetClicked();
 		return true;
 	}
 	long pt = pressedTime_ms();
-	if(pt > 4000) repeatTime_ms = 0;
-	else if(pt > 3000) repeatTime_ms = 100;
-	else if(pt > 1500) repeatTime_ms = 200;
+	if (pt > 4000)
+		repeatTime_ms = 0;
+	else if (pt > 3000)
+		repeatTime_ms = 100;
+	else if (pt > 1500)
+		repeatTime_ms = 200;
 
-	if( (pt - lastUpdateTime_ms) > repeatTime_ms)
+	if ((pt - lastUpdateTime_ms) > repeatTime_ms)
 	{
 		lastUpdateTime_ms = pt;
 		return true;
@@ -117,7 +131,6 @@ void Button::resetClicked()
 {
 	_wasClicked = false;
 }
-
 
 void Button::setDebounceDelay_ms(int newDebounceDelay_ms)
 {

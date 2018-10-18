@@ -10,6 +10,7 @@
 class Button
 {
 public:
+	Button();
 	Button(const int buttonPin);
 	Button(const int buttonPin, const bool isPulldownButton);
 	~Button();
@@ -21,11 +22,12 @@ public:
 	bool wasClicked();
 	void resetClicked();
 	void setDebounceDelay_ms(int newDebounceDelay_ms);
+	void config(const int buttonPin, const bool isPulldownButton);
 
 private:
 	int buttonPressedValue = LOW;
 	int buttonReleasedValue = HIGH;
-	const int pin;
+	int pin;
 	int currState;                  // the current reading from the input pin
 	long currStateTime_ms;          // How long we've been in the current state.
 	long lastUpdateTime_ms;
