@@ -5,16 +5,9 @@
 
 #include "Button.h"
 
-Button::Button()
-{
+Button::Button() {}
 
-}
-
-Button::Button(const int buttonPin)
-{
-	//Button(buttonPin, true);
-	config(buttonPin, true);
-}
+Button::Button(const int buttonPin) : Button(buttonPin, true) {}
 
 Button::Button(const int buttonPin, const bool isPulldownButton)
 {
